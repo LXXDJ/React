@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+         body {
+            margin: 0;
+        }
+
+        .container {
+            background: skyblue;
+            width: 100%;
+            height: 100vh;      /* 1vh는 화면의 높이 1% */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            width: 100%;
+            height: 100px;
+            background: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .content {
+            flex-grow: 1;
+            background: lightgray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .todo-list {
+            background: white;
+            width: 500px;
+            border: 1px solid black;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding-left: 50px;
+        }
+
+        .todo-list label {
+            margin: 20px;
+        }
+
+        .todo-list button {
+            border: none;
+            background: red;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .append-list button {
+            background: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            height: 30px;
+        }
+
+        .footer {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            background: black;
+            color: white;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const {useState} = React;
+
+        function App(){
+            const [todo, setTodo] = useState([]);
+            const [inputText, setInputText] = useState('');
+            const [id, setId] = useState(1);
+
+            const onChangeHandler = e => setInputText(e.target.value);
+            const onClickHandler = () => {
+                const changedTodo = todo.concat({id: id, content: inputText, isChecked: false});
+                setTodo(changedTodo);
+                setId(id + 1);
+                setInputText('');
+            }
+            const onRemove = id => {
+                const changedTodo = todo.filter(item => item.id !== id);
+                setTodo(changedTodo);
+            }
+            const checkedHandler = id => {
+                const updateTodo = todo.map(item => item.id === id ? {...item, isChecked: !item.isChecked} : item);
+                setTodo(updateTodo);
+            }
+
+            const todoList = todo.map(item => 
+                <label style={{textDecoration: item.isChecked ? 'line-through':'none'}} key={item.id}>
+                    <input type="checkbox" name="checkbox" checked={item.isChecked} onChange={()=>checkedHandler(item.id)}/>
+                    {item.content}
+                    <button onClick={()=>onRemove(item.id)}>X</button>
+                </label>
+            );
+
+            return(
+                <div className="container">
+                    <header className="header">오늘의 할일! {new Date().toLocaleDateString()}</header>
+                    <section className="content">
+                        <h5>Todo-list</h5>
+                        <div className="todo-list">{todoList}</div>
+                        <div className="append-list">
+                            <input type="text" value={inputText} onChange={onChangeHandler}/>
+                            <button onClick={onClickHandler}>추가</button>
+                        </div>
+                    </section>
+                    <footer className="footer">copyright 2022. team-greedy all rights reserved.</footer>
+                </div>
+            )
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+    </script>
+</body>
+</html> 
