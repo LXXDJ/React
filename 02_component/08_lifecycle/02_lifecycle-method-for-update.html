@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        /* state가 변경되는 상황을 만들고 업데이트 lifecycle 메소드 확인 */
+        class TimePrinter extends React.Component{
+            state = {
+                now: new Date().toLocaleTimeString()
+            };
+
+            /* 1. 업데이트에서도 이 메소드가 동작될수 있으니까 확인차 추가 */
+            static getDerivedStateFromProps(props, state){
+                console.log('getDerivedStateFromProps');
+                return null;
+            }
+
+            /* 2. 컴포넌트의 리렌더링 여부를 결정하는 메소드 */
+            shouldComponentUpdate(nextProps, nextState){
+                console.log('shouldComponentUpdate');
+                console.log(nextProps);
+                console.log(nextState);
+
+                /* 반드시 boolean 반환, false 반환 시 render부터 이후 생명주기 메소드 호출은 여기서 중단됨
+                해당 메서드를 정의하지 않거나 리턴 타입을 생성하지 않으면 항상 true 반환 */
+                return true;
+            }
+
+            /* 3. 컴포넌트를 렌더링하는 메소드 */
+            render(){
+                console.log('render');
+                return(
+                    <>
+                        <button onClick={()=>this.setState({now: new Date().toLocaleTimeString()})}>현재시간확인</button>
+                        <h1>{this.state.now}</h1>
+                    </>
+                )
+            }
+
+            /* 4. 컴포넌트의 변화를 실제 DOM에 반영하기 직전에 호출하는 메소드 */
+            getSnapshotBeforeUpdate(prevProps, prevState){
+                console.log('getSnapshotBeforeUpdate');
+                return {
+                    message: '스냅샷'
+                }
+            }
+
+            /* 5. 컴포넌트 업데이트 작업이 끝난 후 호출하는 메소드 */
+            componentDidUpdate(prevProps, prevState, snapshot){
+                console.log('componentDidUpdate');
+                console.log(snapshot);
+            }
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<TimePrinter/>);
+    </script>
+</body>
+</html> 

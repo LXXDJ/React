@@ -24,14 +24,16 @@
         }
 
         PropsVerify.propTypes = {
-            name: propTypes.string,
-            age: propTypes.number.isRequired,
-            hobbies: propTypes.array,
-            address: propTypes.array
+            name: PropTypes.string,
+            age: PropTypes.number.isRequired,
+            hobbies: PropTypes.array,
+            address: PropTypes.array
         };
 
         ReactDOM.createRoot(document.getElementById('root')).render([
-            
+            <PropsVerify name="김철수" age={20} hobbies={['축구', '농구']} address={['서울시', '서초구']}></PropsVerify>,
+            <PropsVerify name={1} hobbies={['취미1', '취미2']} address={1}></PropsVerify>,  // propTypes에 위반되도록 작성하여 콘솔창에 3가지 warning 발생
+            <PropsVerify name="김영희" age={22} hobbies={['달리기', '수영']} address={['서울시', '종로구']}></PropsVerify>
         ]);
     </script>
 </body>
