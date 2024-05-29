@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <script>
+        function callAPI(){
+            fetch('https://jsonplaceholder.typicode.com/users')
+                .then(response => {
+                    console.log('fetch response: ', response);
+                    return response.json();
+                }).then(data => console.log('fetch data : ', data));
+
+            /* axios는 바로 데이터를 읽을 수 있는 형태로 반환 */
+            axios.get('https://jsonplaceholder.typicode.com/users')
+                .then(response => {
+                    console.log('axios response: ', response);
+                    console.log('axios data : ', response.data);
+                });
+        }
+
+        callAPI();
+    </script>
+</body>
+</html> 

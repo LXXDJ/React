@@ -22,7 +22,7 @@
             const {username, password} = form;  // form.username 대신 그냥 username으로 적어주기 위해 구조분해할당 해줌
 
             const onChangeHandler = e => {
-                // setForm({[e.target.name] : e.target.value});
+                // setForm({[e.target.name] : e.target.value});    // 이렇게 입력하면 hooks에 username과 password 둘 중 하나만 관리된다. 로그인 버튼을 클릭하면 마지막에 입력된 값만 알럿창에 표시된다.
 
                 const changeForm = {
                     ...form,                            // 스프레드 연산자를 사용해 기존 form 객체의 나머지 프로퍼티 복사
