@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class ErrorBoundary extends React.Component{
+            state = {hasError: false}
+
+            /* 1. 에러 정보를 state에 저장하는 용도 */
+            static getDerivedStateFromError(error){
+                console.log('getDerivedStateFromError');
+                return {hasError: true};
+            }
+
+            /* 2. 에러 정보를 서버로 전송하는 용도 */
+            componentDidCatch(error, info){
+                console.log('componentDidCatch');
+                console.log(this.state);
+                console.log({error, info});
+            }
+
+            render(){
+                // 에러가 발생했으면 '에러 발생' 문구 출력
+                if(this.state.hasError) return <h1>에러 발생</h1>;
+                // 에러가 없으면 TimePrinter 출력
+                return this.props.children;
+            }
+        }
+
+        class TimePrinter extends React.Component{
+            state = {now: new Date().toLocaleTimeString()};
+
+            render(){
+                return(
+                    <>
+                        <button onClick={() => this.setState({now: new Date().toLocaleTimeString()})}>현재시간확인</button>
+                        <h1>{this.states.now}</h1>
+                    </>
+                )
+            }               // 에러 발생을 위해 일부러 this.state.now를 this.states.now로 입력
+        }
+
+        class App extends React.Component{
+            render(){
+                return(
+                    <ErrorBoundary>
+                        <TimePrinter/>
+                    </ErrorBoundary>
+                )
+            }
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+    </script>
+</body>
+</html> 
