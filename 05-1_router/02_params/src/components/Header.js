@@ -1,6 +1,6 @@
 function Header(){
     return(
-        <h1>Weldom to Ohgiraffers Restaurant</h1>
+        <h1>Welcom to Ohgiraffers Restaurant</h1>
     )
 }
 

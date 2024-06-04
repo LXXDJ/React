@@ -9,3 +9,8 @@ export function getMenuList(){
 export function getMenuDetails(menuCode){
     return menus.find(menu => menu.menuCode == menuCode);
 }
+
+/* 메뉴명 전달받아 메뉴 이름을 포함하고 있는 메뉴 목록 조회 */
+export function getSearchMenu(menuName){
+    return menus.filter(menu => menu.menuName.match(menuName));     // filter : true인 것만 반환
+}

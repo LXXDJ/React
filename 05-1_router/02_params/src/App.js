@@ -5,6 +5,7 @@ import About from './pages/About';
 import Menu from './pages/Menu';
 import MenuDetails from "./pages/MenuDetails";
 import MenuSearchResult from "./pages/MenuSearchResult";
+import Error from './pages/Error';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="search" element={<MenuSearchResult/>} />
           </Route>
         </Route>
+        <Route path="*" element={<Error/>} />
       </Routes>
     </BrowserRouter>
   );
