@@ -50,11 +50,14 @@
         );
 
         function App(){
+            console.log(useSelector(state => state));
+
+            /* combineReducers를 이용할 경우, 리듀서별로 관리되는 state를 각각 반환*/
             const {currentCount} = useSelector(state => state.countReducer);
             const {isActivity} = useSelector(state => state.activationReducer);
             const {name, email, phone} = useSelector(state => state.userReducer);
 
-            const dispatch = useDispatch();
+            const dispatch = useDispatch();     // 여길 통해서 dispatch가 사용가능해짐, dispatch로 action을 넘기고 state 수정
 
             const increaseCount = () => {
                 dispatch({
