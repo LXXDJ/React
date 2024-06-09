@@ -62,7 +62,7 @@
         /*** UI 끝 ***/
 
         /*** 스토어 시작 ***/
-        const {createStore, compose} = Redux;
+        const {createStore, compose, applyMiddleware} = Redux;
 
         const store = createStore(
             reducer,

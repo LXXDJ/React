@@ -24,7 +24,7 @@
 
         /* 미들웨어 */
         const thunkMiddleware = ({dispatch}) => next => action => {
-            // 객체 대신 함수가 전달되는 상황이라면, 그 함수에 dispatch와 getState를 전달한다.
+            // 객체 대신 함수가 전달되는 상황이라면, 그 함수에 dispatch를 전달한다.
             if(typeof action === 'function') return action(dispatch);
             // 함수가 아닐 경우, 그냥 action을 가지고 next로 간다.
             return next(action);    // next는 또다른 미들웨어로 가거나 reducer로 간다. 여기엔 미들웨어가 더 없으니까 reducer로 감
